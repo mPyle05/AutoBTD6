@@ -7,7 +7,7 @@ cfg = configparser.ConfigParser()
 roundCompleted = set()
 gameStatus = None
 currentMap = None
-
+  
 
 
 def check_game_status():
@@ -39,7 +39,6 @@ def gameplay():
     global gameStatus
 
     cfg.read(fr'gameplans\{currentMap}.ini')
-    #cfg.read(r'gameplans\flooded_valley.ini')  # make dynamic later
 
     while True:
         
@@ -102,6 +101,7 @@ def collection():
     global gameStatus
 
     image.click(fr"img\collect.png")
+
     while True:  
         if image.find(fr"img\lowestTier.png"):
             image.click(fr"img\lowestTier.png")
@@ -148,9 +148,3 @@ def main():
 
 if __name__ == "__main__":
    main()
-
-
-##    
-## ADD INSTA MONKEY COLLECTION from R100
-## ADD INST MONKEY COLLECTION from Collection event
-##
