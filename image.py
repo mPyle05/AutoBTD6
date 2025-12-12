@@ -1,8 +1,5 @@
-import cv2
-import numpy as np
-import pyautogui
-import time
-import pytesseract
+import cv2, numpy as np, pyautogui, time, pytesseract
+from PIL import Image
 
 # tell pytesseract exactly where Tesseract lives on disk:
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
@@ -11,6 +8,26 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tessera
 roundRegion = (2240, 135, 335, 75)
 # Region where the "selected" tower lives: (x, y, width, height)
 selectedRegion = (2557,213,200,150)  
+
+
+def screen_scaling(paths):
+    main_size = (3200, 2000)           
+    current_size = pyautogui.size()    
+
+    prop = (current_size[0] / main_size[0], current_size[1] / main_size[1])
+    # if prop == (1,1):
+    #     print("No scaling needed")
+    #     return
+
+    for path in paths:
+        img = Image.open(path)
+        resized_img = img.resize(img.size[0] * prop[0], img.size[1] * prop[1])
+        newPath = "{}_{}.png".format(path[:-4],str(prop[0]))
+        resized_img.save(newPath)
+
+screen_scaling([fr"img\collect.png"])
+
+
 
 def find(template_path, threshold=0.8,area=False):
     screenshot = pyautogui.screenshot()
