@@ -1,5 +1,6 @@
 import cv2, numpy as np, pyautogui, time, pytesseract
 from PIL import Image
+from pathlib import Path
 
 # tell pytesseract exactly where Tesseract lives on disk:
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
@@ -11,21 +12,26 @@ selectedRegion = (2557,213,200,150)
 
 
 def screen_scaling(paths):
-    main_size = (3200, 2000)           
+    main_size = (3200, 2000)
+    # main_size = (3200, 1000)
     current_size = pyautogui.size()    
 
-    prop = (current_size[0] / main_size[0], current_size[1] / main_size[1])
-    # if prop == (1,1):
-    #     print("No scaling needed")
-    #     return
+    prop = (int(current_size[0] / main_size[0]), int(current_size[1] / main_size[1]))
+    if prop == (1,1):
+        print("No scaling needed")
+        return
+    else:
+        file_path = Path("{}_{}X{}.png".format(paths[0][:-4],str(prop[0]),str(prop[1])))
+        if file_path.is_file():
+            return prop
 
     for path in paths:
         img = Image.open(path)
-        resized_img = img.resize(img.size[0] * prop[0], img.size[1] * prop[1])
-        newPath = "{}_{}.png".format(path[:-4],str(prop[0]))
+        # print(type(img))
+        resized_img = img.resize([(img.size[0] * prop[0]), (img.size[1] * prop[1])])
+        newPath = "{}_{}X{}.png".format(path[:-4],str(prop[0]),str(prop[1]))
         resized_img.save(newPath)
-
-screen_scaling([fr"img\collect.png"])
+    return prop
 
 
 

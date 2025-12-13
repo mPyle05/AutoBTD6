@@ -118,7 +118,11 @@ def collection():
     
 
 
-def main():  
+def main():
+
+    
+    image.screen_scaling()
+
     while True:
         global gameStatus
         global currentMap
