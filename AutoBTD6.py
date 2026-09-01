@@ -121,7 +121,7 @@ def collection():
 def main():
 
     
-    image.screen_scaling()
+    # image.screen_scaling()
 
     while True:
         global gameStatus
@@ -137,7 +137,7 @@ def main():
                 image.click(r"img\play.png")
             case "map_selection":
                 #currentMap = maps.startCollection("july4th")
-                currentMap = maps.start_game("bloody_puddles", "hard", "impoppable")
+                currentMap = maps.start_game("dark_castle", "hard", "impoppable")
                 gameStatus = "game_started"
             case "game_started":
                 gameplay()
